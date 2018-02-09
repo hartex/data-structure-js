@@ -1,4 +1,6 @@
-const SingleLinkedList = require('../src/single-linked-list');
+//const LinkedList = require('./students');
+
+const LinkedList = require('../src/single-linked-list');
 
 let list;
 
@@ -7,7 +9,7 @@ beforeEach(() => {
 });
 
 function setUpList() {
-    list = new SingleLinkedList(1, 23, 44, 'dsfs', {});
+    list = new LinkedList(1, 23, 44, 'dsfs', {});
 }
 
 /* --- actual tests --- */
