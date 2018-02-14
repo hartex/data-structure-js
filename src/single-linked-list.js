@@ -1,16 +1,23 @@
+class Node {
+    constructor(value, next) {
+        this.value = value;
+        this.next = next;
+    }
+}
+
 class SingleLinkedList {
     constructor() {
         this.tail = null;
         this.head = null;
         this.length = 0;
-        Array.from(arguments).forEach(v => this.push(v))
+        this.push(...arguments);
     }
 
     get(index) {
-        return this._getNodes(index).value;
+        return this._getNode(index).value;
     }
 
-    _getNodes(index) {
+    _getNode(index) {
         if (this.length === 0) {
             throw new Error('List is empty');
         } else if (index + 1 > this.length) {
@@ -38,8 +45,8 @@ class SingleLinkedList {
             }
             this.push(value);
         } else {
-            const addingNode = new Node(value, this._getNodes(index));
-            this._getNodes(index - 1).next = addingNode;
+            const addingNode = new Node(value, this._getNode(index));
+            this._getNode(index - 1).next = addingNode;
         }
     }
 
@@ -100,22 +107,69 @@ class SingleLinkedList {
         return result;
     }
 
+    unshift() {
+        const listBeginning = new SingleLinkedList(...arguments);
+        const currentHead = this.head;
+        this.head = listBeginning.head;
+        if (!this.tail) {
+            this.tail = listBeginning.tail;
+        }
+        listBeginning.tail.next = currentHead;
+        this.length = this.length + listBeginning.length;
+    }
+
+    contains(element) {
+        let result = false;
+        this.forEachUntil(v => {}, p => {
+            const comparisonResult = Object.is(element, p);
+            if (comparisonResult) {
+                result = true;
+                return false;
+            } else {
+                return true;
+            }
+        })
+        return result;
+    }
+
     forEach(callback) {
+        this.forEachUntil(callback, v => true);
+    }
+
+    forEachUntil(callback, predicate) {
         let current = this.head,
             index = 0;
         while (current) {
-            callback(current, index);
-            current = current.next;
-            index++;
+            if (predicate(current.value)) {
+                callback(current.value, index);
+                current = current.next;
+                index++;
+            } else {
+                break;
+            }
         }
     }
-}
 
-class Node {
-    constructor(value, next) {
-        this.value = value;
-        this.next = next;
+    toString() {
+        return JSON.stringify(this.asArray);
+    }
+
+    get asArray() {
+        const array = [];
+        this.forEach(v => array.push(v));
+        return array;
+    }
+
+    reverse() {
+        const tempList = new SingleLinkedList();
+        this.forEach(v => tempList.unshift(v));
+        this.head = tempList.head;
+        this.tail = tempList.tail;
+        return this;
     }
 }
+/* export {
+    SingleLinkedList as LinkedList
+}; */
 
 module.exports = SingleLinkedList;

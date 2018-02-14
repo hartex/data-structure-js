@@ -1,5 +1,3 @@
-//const LinkedList = require('./students');
-
 const LinkedList = require('../src/single-linked-list');
 
 let list;
@@ -61,5 +59,8 @@ test('List toString() returns correct string representation of the list', () => 
 });
 
 test('List reverse() returns correct string representation of the list', () => {
-    expect(list.reverse().toString()).toBe('[{}, "dsfs", 44, 23, 1]');
+    const reversed = list.reverse();
+    expect(reversed.get(1)).toBe('dsfs');
+    expect(reversed.get(2)).toBe(44);
+    expect(reversed.tail.value).toBe(1);
 });
