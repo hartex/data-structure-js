@@ -55,7 +55,7 @@ test('List contains() checks if an element exist in the list', () => {
 });
 
 test('List toString() returns correct string representation of the list', () => {
-    expect(list.toString()).toBe(JSON.stringify([1, 23, 44, "dsfs", {}]));
+    expect(list.toString()).toBe('[1,23,44,"dsfs",{}]');
 });
 
 test('List reverse() returns correct string representation of the list', () => {

@@ -23,16 +23,11 @@ class SingleLinkedList {
         } else if (index + 1 > this.length) {
             throw new Error('Index is greater then list length')
         } else {
-            let current = this.head,
-                currentIndex = 0;
-            while (current) {
-                if (currentIndex === index) {
-                    return current;
-                } else {
-                    current = current.next;
-                    currentIndex++;
-                }
+            let current = this.head;
+            for (let i = 0; i < index; i++) {
+                current = current.next
             }
+            return current;
         }
     }
 
@@ -65,28 +60,25 @@ class SingleLinkedList {
     }
 
     pop() {
-        let result;
+        let resultNode;
         if (this.length === 0) {
             throw new Error('List is empty');
         } else if (this.length === 1) {
-            result = this.head.value;
+            resultNode = this.head;
             this.head = null;
             this.tail = null;
         } else if (this.length === 2) {
-            result = this.tail.value;
+            resultNode = this.tail;
             this.head.next = null;
             this.tail = this.head;
         } else {
-            let current = this.head;
-            while (current.next.next) {
-                current = current.next;
-            }
-            current.next = null;
-            result = this.tail.value;
-            this.tail = current;
+            const penultimate = this._getNode(this.length - 2);
+            resultNode = penultimate.next;
+            penultimate.next = null;
+            this.tail = penultimate;
         }
         this.length--;
-        return result;
+        return resultNode.value;
     }
 
     shift() {
@@ -163,13 +155,11 @@ class SingleLinkedList {
     reverse() {
         const tempList = new SingleLinkedList();
         this.forEach(v => tempList.unshift(v));
-        this.head = tempList.head;
-        this.tail = tempList.tail;
-        return this;
+        return tempList;
     }
 }
-/* export {
+export {
     SingleLinkedList as LinkedList
-}; */
+};
 
-module.exports = SingleLinkedList;
+/* module.exports = SingleLinkedList; */
