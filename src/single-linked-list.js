@@ -40,8 +40,8 @@ class SingleLinkedList {
             }
             this.push(value);
         } else {
-            const addingNode = new Node(value, this._getNode(index));
-            this._getNode(index - 1).next = addingNode;
+            const updatingNode = this._getNode(index);
+            updatingNode.value = value;
         }
     }
 
@@ -112,7 +112,8 @@ class SingleLinkedList {
 
     contains(element) {
         let result = false;
-        this.forEachUntil(v => {}, p => {
+        this.forEachUntil(v => {
+        }, p => {
             const comparisonResult = Object.is(element, p);
             if (comparisonResult) {
                 result = true;
@@ -158,6 +159,7 @@ class SingleLinkedList {
         return tempList;
     }
 }
+
 export {
     SingleLinkedList as LinkedList
 };
