@@ -35,10 +35,10 @@ class SingleLinkedList {
         if (index + 1 > this.length) {
             let currentTail = this.tail;
             while (this.length < index) {
-                this.push(null);
+                this.pushOne(null);
                 currentTail = currentTail.next;
             }
-            this.push(value);
+            this.pushOne(value);
         } else {
             const updatingNode = this._getNode(index);
             updatingNode.value = value;
@@ -46,17 +46,19 @@ class SingleLinkedList {
     }
 
     push() {
-        Array.from(arguments).forEach(value => {
-            const addingNode = new Node(value);
-            if (this.length === 0) {
-                this.tail = addingNode;
-                this.head = addingNode;
-            } else {
-                this.tail.next = addingNode;
-                this.tail = addingNode;
-            }
-            this.length++;
-        })
+        Array.from(arguments).forEach(value => this.pushOne(value));
+    }
+
+    pushOne(element) {
+        const addingNode = new Node(element);
+        if (this.length === 0) {
+            this.tail = addingNode;
+            this.head = addingNode;
+        } else {
+            this.tail.next = addingNode;
+            this.tail = addingNode;
+        }
+        this.length++;
     }
 
     pop() {
@@ -121,7 +123,7 @@ class SingleLinkedList {
             } else {
                 return true;
             }
-        })
+        });
         return result;
     }
 
@@ -158,10 +160,33 @@ class SingleLinkedList {
         this.forEach(v => tempList.unshift(v));
         return tempList;
     }
+
+    get sorted() {
+        return this.asArray.sort();
+    }
+
+    [Symbol.iterator]() {
+        let i = 0;
+        const list = this;
+        return {
+            next() {
+                if (i < list.length) {
+                    return {
+                        done: false,
+                        value: list.get(i++)
+                    };
+                } else {
+                    return {
+                        done: true
+                    };
+                }
+            }
+        }
+    };
 }
 
-export {
+/*export {
     SingleLinkedList as LinkedList
-};
+};*/
 
-/* module.exports = SingleLinkedList; */
+module.exports = SingleLinkedList;

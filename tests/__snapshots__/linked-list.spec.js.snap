@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List get() returns correct element 1`] = `"dsfs"`;
+
+exports[`List length should be correct 1`] = `5`;
+
+exports[`List should support iteration over its elements 1`] = `
+Array [
+  1,
+  23,
+  44,
+  "dsfs",
+  Object {},
+]
+`;
+
+exports[`List toString() returns correct string representation of the list 1`] = `"[1,23,44,\\"dsfs\\",{}]"`;

@@ -1,24 +1,15 @@
 const LinkedList = require('../src/single-linked-list');
 
+/* --- setup --- */
+
 let list;
-
-beforeEach(() => {
-    setUpList();
-});
-
-function setUpList() {
-    list = new LinkedList(1, 23, 44, 'dsfs', {});
-}
+beforeEach(() => list = new LinkedList(1, 23, 44, 'dsfs', {}));
 
 /* --- actual tests --- */
 
-test('List length should be correct', () => {
-    expect(list.length).toBe(5);
-});
+test('List length should be correct', () => expect(list.length).toMatchSnapshot());
 
-test('List get() returns correct element', () => {
-    expect(list.get(3)).toBe('dsfs');
-});
+test('List get() returns correct element', () => expect(list.get(3)).toMatchSnapshot());
 
 test('List set() sets correct element', () => {
     list.set(1, 'aaaaaaa');
@@ -54,13 +45,20 @@ test('List contains() checks if an element exist in the list', () => {
     expect(list.contains('asdfasdf')).toBe(false);
 });
 
-test('List toString() returns correct string representation of the list', () => {
-    expect(list.toString()).toBe('[1,23,44,"dsfs",{}]');
-});
+test('List toString() returns correct string representation of the list', () =>
+    expect(list.toString()).toMatchSnapshot());
 
 test('List reverse() returns correct string representation of the list', () => {
     const reversed = list.reverse();
     expect(reversed.get(1)).toBe('dsfs');
     expect(reversed.get(2)).toBe(44);
     expect(reversed.tail.value).toBe(1);
+});
+
+test('List should support iteration over its elements', () => {
+    const tempArray = [];
+    for (let z of list) {
+        tempArray.push(z);
+    }
+    expect(tempArray).toMatchSnapshot();
 });
